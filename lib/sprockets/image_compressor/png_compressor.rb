@@ -4,11 +4,10 @@ module Sprockets
   module ImageCompressor
     class PngCompressor < Base
       def initialize
-        @name = "pngcrush"
+        @name = "optipng"
       end
 
       def compress(content)
-        warn "compressing"
         compressed_png_data = ""
         Tempfile.open ["in_file", ".png"] do |in_file|
           in_file.binmode
@@ -16,7 +15,7 @@ module Sprockets
           in_file.write content
           in_file.close
 
-          out = `#{binary_path} #{in_file.path} #{out_file_path} 2>&1`
+          out = `#{binary_path} #{in_file.path} -out #{out_file_path} 2>&1`
           compressed_png_data = IO.binread(out_file_path)
           File.unlink out_file_path
         end
