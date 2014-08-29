@@ -8,6 +8,7 @@ module Sprockets
       end
 
       def compress(content)
+        puts "compressing"
         compressed_png_data = ""
         Tempfile.open ["in_file", ".png"] do |in_file|
           in_file.binmode
